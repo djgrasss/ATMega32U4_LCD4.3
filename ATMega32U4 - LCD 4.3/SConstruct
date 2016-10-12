@@ -1,0 +1,34 @@
+import os
+
+#Initialize the environment
+env = DefaultEnvironment(tools = ['gcc', 'gnulink'])
+env.Append(ENV = {'PATH' : os.environ['PATH']})
+env.Replace(CC="avr-gcc")
+env.Replace(CXX="avr-g++")
+env.Replace(PROGSUFFIX=".elf")
+
+mcu = 'atmega32u4'
+f_cpu = 16000000
+cstandard = 'gnu99'
+
+env.Replace(CCFLAGS=["-mmcu={}".format(mcu),
+                     "-Os",
+                     "-gdwarf-2",
+                     "-DF_CPU={}UL".format(f_cpu),
+                     "-std={}".format(cstandard),
+                     "-funsigned-char",
+                     "-funsigned-bitfields",
+                     "-fpack-struct",
+                     "-fshort-enums",
+                     "-Wall",
+                     "-Wa,-adhlns=${TARGET.dir}/${SOURCE.filebase}.lst",
+                     "-Wstrict-prototypes"])
+
+env.Replace(LINKFLAGS=[env['CCFLAGS'], "-Wl,--gc-sections,--relax"])
+
+elf=env.Program("main",[Glob("*.c")])
+hex=env.Command("main.hex",elf,"avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock $SOURCE $TARGET")
+bin=env.Command("main.bin",elf,"avr-objcopy -O binary -R .eeprom -R .fuse -R .lock $SOURCE $TARGET")
+
+# Custom clean action to remove lst files
+Clean([elf, hex, bin], Glob('*.lst'))

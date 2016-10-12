@@ -12,7 +12,7 @@ const char text[] PROGMEM = "National Instruments";
 const char text2[] PROGMEM = "rodrigo@volium.com";
 
 // Create a stream to direct stdio.h calls to the right function (putChar)
-FILE lcd_str = FDEV_SETUP_STREAM (putChar, NULL, _FDEV_SETUP_WRITE);
+static FILE lcd_str = FDEV_SETUP_STREAM (putChar, NULL, _FDEV_SETUP_WRITE);
 
 uint16_t touch_x, touch_y;
 

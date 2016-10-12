@@ -299,7 +299,7 @@ void setCharXY(uint16_t x, uint16_t y)
    putChar_y = y;
 }
 
-void putChar(char c)
+int putChar(char c, FILE *stream)
 {
 	uint8_t i,ch;
 	uint16_t j;
@@ -382,6 +382,7 @@ void putChar(char c)
 	sbi(LCD_CS_PORT, LCD_CS);
 	clrXY();
    putChar_x += (current_font.x_size);
+   return 0;
 }
 
 void printChar(char c, uint16_t x, uint16_t y)
@@ -505,11 +506,11 @@ void print(char *st, uint16_t x, uint16_t y)
    }
 }
 
-void print_P(const char *st, uint16_t x, uint16_t y)
+void print_P(uint_farptr_t st, uint16_t x, uint16_t y)
 {
 	uint16_t stl, i;
 
-	stl = strlen_PF((uint_farptr_t)st);
+	stl = strlen_PF(st);
 
 	if (orientation==PORTRAIT)
 	{
