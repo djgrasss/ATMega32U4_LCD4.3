@@ -26,9 +26,12 @@ env.Replace(CCFLAGS=["-mmcu={}".format(mcu),
 
 env.Replace(LINKFLAGS=[env['CCFLAGS'], "-Wl,--gc-sections,--relax"])
 
-elf=env.Program("main",[Glob("*.c")])
-hex=env.Command("main.hex",elf,"avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock $SOURCE $TARGET")
-bin=env.Command("main.bin",elf,"avr-objcopy -O binary -R .eeprom -R .fuse -R .lock $SOURCE $TARGET")
+SConscript('src/SConscript', variant_dir='build', duplicate=0)
 
-# Custom clean action to remove lst files
-Clean([elf, hex, bin], Glob('*.lst'))
+hex=env.Command('main.hex','build/main.elf','avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
+bin=env.Command('main.bin','build/main.elf','avr-objcopy -O binary -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
+
+Default(hex, bin)
+
+env.Command('programbin',bin,'avrdude -p atmega32u4 -P usb -c avrispv2 -U flash:w:$SOURCE')
+env.Command('programhex',hex,'avrdude -p atmega32u4 -P usb -c avrispv2 -U flash:w:$SOURCE')
