@@ -21,9 +21,15 @@ int main(void)
    // This will divide the Main Clock by 2
    // clock_prescale_set(clock_div_2);
 
+   // Set up LED on board and toggle twice
    sbi(DDRE,6);
+
    sbi(PORTE,6);
-   _delay_ms(100);
+   _delay_ms(200);
+   cbi(PORTE,6);
+   _delay_ms(200);
+   sbi(PORTE,6);
+   _delay_ms(200);
    cbi(PORTE,6);
 
    orientation=LANDSCAPE;
@@ -31,6 +37,37 @@ int main(void)
    UTFT_init();
 
    UTFT_initLCD(orientation);
+   setFrontColor(0, 0, 0);
+   setBackColor(255, 255, 255);
+
+   uint16_t colors[] = {
+      VGA_BLACK,
+      VGA_WHITE,
+      VGA_RED,
+      VGA_GREEN,
+      VGA_BLUE,
+      VGA_SILVER,
+      VGA_GRAY,
+      VGA_MAROON,
+      VGA_YELLOW,
+      VGA_OLIVE,
+      VGA_LIME,
+      VGA_AQUA,
+      VGA_TEAL,
+      VGA_NAVY,
+      VGA_FUCHSIA,
+      VGA_PURPLE,
+   };
+
+   uint16_t color = 0;
+   while(1)
+   {
+      for (color = 0; color < sizeof(colors)/sizeof(colors[0]); color++)
+      {
+         fillScreen(colors[color]);
+         _delay_ms(2000);
+      }
+   }
 
    setFont(SmallFont);
 
