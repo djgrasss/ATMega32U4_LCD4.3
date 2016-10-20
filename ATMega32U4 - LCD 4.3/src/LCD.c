@@ -3,9 +3,9 @@
 
 void set_direction_registers(void)
 {
-   DDRB = 0xFF;   // All pins are outputs             - 1111 1111
-   DDRD = 0xFF;   // All pins are outputs             - 1111 1111
-   DDRF |= 0xB1;  // Bits 0, 4, 5 and 7 are outputs   - 1x11 xxx1
+   DDRB = 0xFF;   // All pins are outputs				- 1111 1111
+   DDRD = 0xFF;   // All pins are outputs				- 1111 1111
+   DDRF |= 0xF1;  // Bits 0, 4, 5, 6 and 7 are outputs	- 1111 xxx1
 }
 
 void LCD_Write_Bus(uint8_t VH,uint8_t VL)
@@ -56,7 +56,7 @@ void UTFT_initLCD(uint8_t orientationation)
    inverted = 0;
 
    // We need to set the RD line, this is active low
-	// sbi(LCD_RD_PORT, LCD_RD); // Decided to pull high via HW
+   sbi(LCD_RD_PORT, LCD_RD);
 
    // Reset the LCD
 	sbi(LCD_RST_PORT, LCD_RST);

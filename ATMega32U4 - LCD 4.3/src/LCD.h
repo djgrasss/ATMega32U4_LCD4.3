@@ -17,7 +17,7 @@
 // Port F0     ->    LCD_RST
 // Port F4     ->    LCD_RS
 // Port F5     ->    LCD_WR
-// Port XX     ->    LCD_RD   // NOT USED, simply pulled high via HW line to VCC
+// Port F6     ->    LCD_RD
 // Port F7     ->    LCD_CS
 
 
@@ -33,8 +33,8 @@
 #define LCD_WR_PORT  PORTF
 #define LCD_WR    5
 
-#define LCD_RD_PORT  PORTXX
-#define LCD_RD    X
+#define LCD_RD_PORT  PORTF
+#define LCD_RD    6
 
 #define LCD_CS_PORT  PORTF
 #define LCD_CS    7

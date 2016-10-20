@@ -59,15 +59,15 @@ int main(void)
       VGA_PURPLE,
    };
 
-   uint16_t color = 0;
-   while(1)
-   {
-      for (color = 0; color < sizeof(colors)/sizeof(colors[0]); color++)
-      {
-         fillScreen(colors[color]);
-         _delay_ms(2000);
-      }
-   }
+//    uint16_t color = 0;
+//    while(1)
+//    {
+//       for (color = 0; color < sizeof(colors)/sizeof(colors[0]); color++)
+//       {
+//          fillScreen(colors[color]);
+//          _delay_ms(2000);
+//       }
+//    }
 
    setFont(SmallFont);
 
@@ -77,7 +77,7 @@ int main(void)
    // Draw crosshairs
    setFrontColor(0, 0, 255);
    setBackColor(0, 0, 0);
-   drawLine(239, 15, 239, 256);
+   drawLine(239, 15, 239, 255);
    drawLine(1, 135, 478, 135);
    for (int i=9; i<470; i+=10)
       drawLine(i, 133, i, 138);
@@ -122,7 +122,7 @@ int main(void)
   // Draw crosshairs
    setFrontColor(0, 0, 255);
    setBackColor(0, 0, 0);
-   drawLine(239, 15, 239, 256);
+   drawLine(239, 15, 239, 255);
    drawLine(1, 135, 478, 135);
    for (int i=9; i<470; i+=10)
       drawLine(i, 133, i, 138);
