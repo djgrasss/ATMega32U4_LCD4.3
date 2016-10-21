@@ -25,10 +25,10 @@ env.Replace(CCFLAGS=["-mmcu={}".format(mcu),
 
 env.Replace(LINKFLAGS=[env['CCFLAGS'], "-Wl,--gc-sections,--relax"])
 
-SConscript('src/SConscript', variant_dir='build', duplicate=0)
+elf = SConscript('src/SConscript', variant_dir='build', duplicate=0)
 
-hex=env.Command('main.hex','build/main.elf','avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
-bin=env.Command('main.bin','build/main.elf','avr-objcopy -O binary -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
+hex=env.Command('main.hex',elf,'avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
+bin=env.Command('main.bin',elf,'avr-objcopy -O binary -R .eeprom -R .fuse -R .lock $SOURCE $TARGET')
 
 Default(hex, bin)
 
