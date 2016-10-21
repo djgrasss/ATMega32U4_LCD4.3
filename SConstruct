@@ -1,8 +1,7 @@
 import os
 
 #Initialize the environment
-env = DefaultEnvironment(tools = ['gcc', 'gnulink'])
-env.Append(ENV = {'PATH' : os.environ['PATH']})
+env = DefaultEnvironment(ENV = os.environ, tools = ['gcc', 'gnulink'])
 env.Replace(CC="avr-gcc")
 env.Replace(CXX="avr-g++")
 env.Replace(PROGSUFFIX=".elf")
